@@ -60,3 +60,37 @@ crashlytics-build.properties
 # Claude Code (local MCP paths and permissions)
 .claude/
 .mcp.json
+
+# Third-party Asset Store packages (reinstall from Asset Store/cache)
+/Assets/AssetInventory/
+/Assets/Boing Kit/
+/Assets/DamageNumbersPro/
+/Assets/Editor Default Resources/
+/Assets/Feel/
+/Assets/Flexalon/
+/Assets/Gizmos/
+/Assets/GUPS/
+/Assets/Malbers Animations/
+/Assets/Plugins/
+/Assets/polyperfect/
+/Assets/Resources/
+/Assets/Scenes/
+/Assets/Settings/
+/Assets/TextMesh Pro/
+/Assets/TutorialInfo/
+/Assets/UnityTechnologies/
+/Assets/vFavorites/
+/Assets/vFolders/
+/Assets/vHierarchy/
+/Assets/Voxel Labs/
+/Assets/WarpedImagination/
+/Assets/Wingman/
+
+# Keep our code
+!/Assets/_AQS/
+
+# Embedded packages in Packages/ (reinstall from Asset Store)
+/Packages/com.arongranberg.aline/
+/Packages/com.febucci.text-animator-unity/
+/Packages/com.kybernetik.animancer/
+# Keep manifest.json and packages-lock.json

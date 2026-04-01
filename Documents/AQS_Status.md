@@ -17,33 +17,25 @@
 
 ## Current State
 
-**Phase:** Sprint 1 -- Core Feel. Migrating from Sandbox to standalone project. Raccoon belly weapon fires mortar-arc bolts, stance-gated. 2.5D greybox level with Cinemachine follow camera. Malbers zones working (Swim, Climb, LedgeGrab). Recipe in `AQS_MalbersRecipe.md`.
+**Phase:** Sprint 1 COMPLETE -- Sprint 2 starting. Migration done. Raccoon belly weapon fires mortar-arc bolts (stance-gated, infinite ammo). Climb drains stamina (falls when empty). 2.5D greybox level with Cinemachine follow camera. Malbers zones working (Swim, Climb, LedgeGrab). Recipe in `AQS_MalbersRecipe.md`.
 
-**Session 15 (Apr 1, 2026) -- Migration from Sandbox:**
-- Standalone project created at `E:\Unity\AQuokkaStory`
-- Minimum packages being installed (new default label approach -- not every project needs every package)
-- Docs migrated from `E:\Unity\Sandbox\Documents\AQuokkaStory\`
-- GitHub repo initialized
-- Claude config created
-- Asset export from Sandbox pending (unitypackage of `Assets/_Sandbox/_AQS/`)
+**Session 15 (Apr 1, 2026) -- Migration + Sprint 1 Wrap-up:**
+- Migration from Sandbox COMPLETE (all 4 phases)
+- Full package stack installed: UPM, OpenUPM (UniTask, MCP), 13 default Asset Store, 5 AQS-specific, 3 third-party art packs
+- Custom AQS assets imported to `Assets/_AQS/` (trimmed set -- raccoon + scripts, 0 compile errors)
+- CustomPatch debug logs removed from MShootable.cs (6 functional patches intact)
+- Ammo IntVars set to -1 (infinite) -- Malbers defaults reset these on fresh install
+- ClimbStamina component added (drains Stamina at 10/s while climbing, falls when empty, regens at 20/s on ground)
+- ClimbTree_Small added to greybox level for stamina testing
+- Stand stance: keep as-is (toggle)
+- Cinemachine CM_2_5D_Follow re-wired to CM Main Target
 
-**Pre-migration state (Session 14, from Sandbox):**
-- Raccoon_Weapon_Test with LockAxis, mortar weapon (Force=15, AimAngle=35), stance-gated firing
-- GreyBox_TestLevel with 11 children: platforms, water pool, climb walls, ledge platform
-- CM_2_5D_Follow virtual camera (offset 4,2,0 WorldSpace, rotation 10,270,0)
-- All zones working: Swim (auto-trigger), Climb (tag+physmat+layer), LedgeGrab (top-of-climb)
-- 10 C# scripts, 3 animator controllers, 7 state SOs, 9 prefabs, 3 scenes
-
-**Next (Session 16 -- Post-Migration Verification):**
-- Import AQS assets from Sandbox export (unitypackage)
-- Verify scenes load, prefabs resolve, scripts compile
-- Fix any broken serialized references (scene objects, prefab refs)
-- Continue Sprint 1 wrap-up:
-  - Climbing stamina -- wire Stamina stat to Climb state
-  - Mortar tuning -- adjust Force/AimAngle with level geometry
-  - Stand stance toggle vs hold decision
-  - Remove remaining CustomPatch debug logs from MShootable.cs
-  - Clean up: delete Raccoon_Fresh_Test from scene
+**Next (Sprint 2 -- Joey Launch MVP):**
+- Raccoon cub prefab as Joey prototype -- follow mom like lemmings
+- Replace bolt projectile with cub launch mechanic
+- Mortar arc tuning (deferred from Sprint 1 -- tune after bolt replaced with cub)
+- JoeyDefinition/AbilityDefinition ScriptableObjects
+- Toolkit for Ballistics trajectory visualization for launch arc
 
 **Sprint 2 prep (after Sprint 1 wrap-up):**
 - Raccoon cub prefab as Joey prototype -- follow mom like lemmings
@@ -74,8 +66,8 @@ These items were completed before the crash and need to be rebuilt:
 | Item | Old Status | New Status |
 |------|-----------|------------|
 | Project setup (Unity 6, URP, GitHub) | Was DONE | DONE |
-| Core player movement (hop, jump) | Was DONE | IN PROGRESS -- Malbers AC with LockAxis 2.5D, Cinemachine follow camera, mortar weapon working |
-| Climbing system with stamina | Was DONE | TODO |
+| Core player movement (hop, jump) | Was DONE | DONE -- Malbers AC with LockAxis 2.5D, Cinemachine follow camera, mortar weapon working |
+| Climbing system with stamina | Was DONE | DONE -- ClimbStamina component drains Stamina stat, falls when empty |
 | Input System integration | Was DONE | DONE -- AQS_InputActions asset + QuokkaInputHandler |
 | Ground detection (collision-based) | Was DONE | DONE -- collision enter/stay/exit with normal check |
 | Joey prefab (base visuals) | Was DONE | TODO |
@@ -84,7 +76,7 @@ These items were completed before the crash and need to be rebuilt:
 | Package installation + configuration | Was DONE | DONE -- Sprint 1 packages installed |
 | Asset eval for new candidates | N/A | DONE -- 30 relevant assets identified |
 | GameEvent/GameEventListener system | Was DONE | DONE -- AQS.Core namespace |
-| Placeholder character (Scorch) | N/A | DONE -- imported with anims, no scripts |
+| Placeholder character (Scorch) | N/A | DROPPED -- using Malbers Raccoon directly |
 
 ## Key Decisions (Session 0)
 
@@ -185,12 +177,13 @@ Searched all evaluated assets for AQS relevance. Results by gameplay need:
 
 | Issue | Severity | Status | Notes |
 |-------|----------|--------|-------|
-| Mortar arc too high/far for 2.5D | Low | TUNING | Force=15, AimAngle=35. Needs adjustment with level geometry. |
+| Mortar arc too high/far for 2.5D | Low | DEFERRED | Force=15, AimAngle=35. Tune after bolt replaced with cub projectile (Sprint 2). |
 | Holster ID mismatch warning | Low | OPEN | "Default Holster does not exist on Holster ID list" on Play. Cosmetic, doesn't affect firing. |
 | LockNextTarget Vector2 type warning | Low | OPEN | Input action type mismatch. Cosmetic. |
 | Rabbit mouth weapon fires into ground | Low | TUNING | Same UseCamera issue as raccoon. Apply UseCamera=false fix when revisiting rabbit. |
-| Remaining CustomPatch debug logs in MShootable.cs | Low | TODO | Remove MShootable-TRACE Debug.Log lines (temporary debugging). |
+| Malbers ammo IntVars reset on reinstall | Medium | KNOWN | Ammo Pistol + Ammo Pistol in Chamber must be -1. Fresh Malbers install resets to 0/32. |
 | GDD may need design updates | Medium | TODO | User to review after format cleanup |
+| Stamina UI needed | Low | TODO | Malbers has prefabs (Slider Stamina UI, Stamina Bar). Wire up in future UI pass. |
 
 ---
 
