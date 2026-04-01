@@ -1,0 +1,26 @@
+A Quokka Story – Audio System Progress Summary
+Where we are now
+- InstrumentRecipe ScriptableObject created (stores frequency, harmonics, envelope, etc.).
+- LightSynth class generates audio clips in real-time using InstrumentRecipe.
+- SynthTester MonoBehaviour successfully plays a note when pressing Spacebar.
+- Confirmed: Sound output works (basic sine-like tone heard).
+- Input System Integration:
+• Unity 6.2.2 with Input System 1.14.2.
+• Old direct keyboard polling removed.
+• PlayerInput with Input Action Map (SynthTest_Actions).
+• 'PlayNote' action bound to Spacebar calls SynthTester.OnPlayNote().
+• Verified: Tone plays correctly when pressing Spacebar.
+- Console logging confirmed working (Debug.Log messages visible).
+Next steps (prioritized)
+1. Ensure Debug.Log always visible for OnPlayNote.
+2. Add support for multiple instruments 
+3. Switch instruments at runtime (cycle with key input).
+4. Different styles per level (swamp, suburb, city, zoo).
+5. Save future feature: style/genre profiles based on example songs.
+Preferences / Constraints
+- No external audio files — all tones are procedurally generated.
+- Input handled exclusively by Unity Input System (no legacy polling).
+- Code should be clear, readable, SOLID principles in mind.
+- Focus first on core; advanced features (style transfer, AI-driven) later.
+Checkpoint reached: Sound and logging confirmed!
+
