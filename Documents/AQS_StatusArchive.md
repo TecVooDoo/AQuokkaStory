@@ -6,6 +6,19 @@
 
 ---
 
+## Session 15 (Apr 1, 2026) -- Migration + Sprint 1 Wrap-up
+- Migration from Sandbox COMPLETE (all 4 phases)
+- Full package stack installed: UPM, OpenUPM (UniTask, MCP), 13 default Asset Store, 5 AQS-specific, 3 third-party art packs
+- Custom AQS assets imported to `Assets/_AQS/` (trimmed set -- raccoon + scripts, 0 compile errors)
+- CustomPatch debug logs removed from MShootable.cs (6 functional patches intact)
+- Ammo IntVars set to -1 (infinite) -- Malbers defaults reset these on fresh install
+- ClimbStamina component added (drains Stamina at 10/s while climbing, falls when empty, regens at 20/s on ground)
+- ClimbTree_Small added to greybox level for stamina testing
+- Stand stance: keep as-is (toggle)
+- Cinemachine CM_2_5D_Follow re-wired to CM Main Target
+
+---
+
 ## Session 11 (Mar 28, 2026) -- Raccoon Belly Weapon Setup
 
 Raccoon_Weapon_Test instantiated from Raccoon PA Player prefab. Belly weapon system wired:

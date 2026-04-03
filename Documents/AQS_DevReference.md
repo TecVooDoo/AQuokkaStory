@@ -22,7 +22,7 @@
 |-----------|---------|--------|
 | `AQS.Core` | Game state, managers, events, utilities | Active |
 | `AQS.Player` | Mom movement, input, stats | Active |
-| `AQS.Joey` | Joey system, abilities, pouch management | Planned |
+| `AQS.Joey` | Joey system, abilities, pouch management | Active |
 | `AQS.Enemy` | Enemy AI, behaviors, spawning | Planned |
 | `AQS.Audio` | Music manager, stem handling, SFX | Planned |
 | `AQS.UI` | HUD, menus, pouch UI | Planned |
@@ -217,7 +217,7 @@ Same as all TecVooDoo projects:
 - **Keep scripts focused** -- extract when a class has more than one clear responsibility. No hard line limit. A 3000-line class that does one thing well is fine.
 - **Prefer interfaces and generics** -- decouple systems, reduce duplication
 - **Collision-based ground detection** -- NOT raycasts (design decision from original project, works better with 2.5D slopes and moving platforms)
-- **3D physics for 2.5D** -- use `Rigidbody` + `CapsuleCollider` + `Collision` (3D types), NOT `Rigidbody2D`. Freeze Z position + rotation. 3D models (Scorch, future quokka) need 3D colliders.
+- **3D physics for 2.5D** -- use `Rigidbody` + `CapsuleCollider` + `Collision` (3D types), NOT `Rigidbody2D`. **Z is lateral movement, X is depth (locked), Y is up.** Camera looks down -X. Freeze X position + rotation on Joeys. Mom uses LockAxis.
 - **Unity 6 Rigidbody API** -- use `rb.linearVelocity` (not `velocity`). No `gravityScale` on 3D Rigidbody -- use `AddForce` with `Physics.gravity` multiplier for fall acceleration.
 - **sealed on MonoBehaviours** -- unless inheritance is specifically intended
 - **Prefer async/await (UniTask)** -- over coroutines

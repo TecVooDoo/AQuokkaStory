@@ -30,7 +30,7 @@
 - **Prefer interfaces and generics** -- decouple systems, reduce duplication
 - **Vanilla SO architecture** -- GameEvent/GameEventListener for events (NOT SOAP)
 - **Malbers Animal Controller** for player movement (MAnimal + LockAxis for 2.5D)
-- **3D physics for 2.5D** -- Rigidbody + CapsuleCollider, freeze Z position + rotation
+- **3D physics for 2.5D** -- Rigidbody + CapsuleCollider. **Z = lateral movement, X = depth (locked), Y = up.** Camera looks down -X. Freeze X position on Joeys, Mom uses LockAxis.
 - **Collision-based ground detection** -- NOT raycasts
 - **Unity 6 API** -- `rb.linearVelocity` not `velocity`
 - **Extract by responsibility** not line count

@@ -5,7 +5,7 @@
 **Unity Version:** 6000.3.11f1 (Unity 6, URP)
 **Project Path:** `E:\Unity\AQuokkaStory`
 **AQS Root:** `Assets/_AQS/`
-**Last Updated:** April 1, 2026 (Session 15 -- Migration from Sandbox)
+**Last Updated:** April 3, 2026 (Session 16 -- Joey System Foundation)
 
 > **NOTE:** Original project lost to crash (pre-GitHub backup era). Resurrected from archived docs. Code rebuilt from scratch in Sandbox incubator (Sessions 0-14). Migrated to standalone project Session 15.
 
@@ -17,31 +17,40 @@
 
 ## Current State
 
-**Phase:** Sprint 1 COMPLETE -- Sprint 2 starting. Migration done. Raccoon belly weapon fires mortar-arc bolts (stance-gated, infinite ammo). Climb drains stamina (falls when empty). 2.5D greybox level with Cinemachine follow camera. Malbers zones working (Swim, Climb, LedgeGrab). Recipe in `AQS_MalbersRecipe.md`.
+**Phase:** Sprint 2 IN PROGRESS. Joey system foundation built. Two Raccoon Cub Joeys (Normal + Lead) placed in scene, following Mom via chain-follow with physics-based hop movement. Proximity-based pouching, mortar-arc launch, auto-recall, energy system all coded. Joeys are autonomous companion AI -- they stop at ledges they can't cross, stay behind when Mom is out of range, and form an emergent follow line.
 
-**Session 15 (Apr 1, 2026) -- Migration + Sprint 1 Wrap-up:**
-- Migration from Sandbox COMPLETE (all 4 phases)
-- Full package stack installed: UPM, OpenUPM (UniTask, MCP), 13 default Asset Store, 5 AQS-specific, 3 third-party art packs
-- Custom AQS assets imported to `Assets/_AQS/` (trimmed set -- raccoon + scripts, 0 compile errors)
-- CustomPatch debug logs removed from MShootable.cs (6 functional patches intact)
-- Ammo IntVars set to -1 (infinite) -- Malbers defaults reset these on fresh install
-- ClimbStamina component added (drains Stamina at 10/s while climbing, falls when empty, regens at 20/s on ground)
-- ClimbTree_Small added to greybox level for stamina testing
-- Stand stance: keep as-is (toggle)
-- Cinemachine CM_2_5D_Follow re-wired to CM Main Target
+**Session 16 (Apr 2-3, 2026) -- Joey System Foundation:**
+- Full Joey system architecture built (9 scripts in `AQS.Joey` namespace)
+- **JoeyDefinition + AbilityDefinition SOs** -- data layer for all Joey archetypes and abilities
+- **JoeyController** -- state machine (FollowingInLine, InPouch, Aiming, Launched, Depleted) + energy
+- **JoeyEnergy** -- energy pool with state-based regen (30/s pouch, 10/s line, 0 launched)
+- **JoeyGroundFollower** -- physics-based hop movement along Z axis, edge/wall detection via raycasts, Mom-dodge placeholder
+- **JoeyBrain** -- autonomous FSM with chain-follow ordering (closest Joey follows Mom, each next follows the one ahead)
+- **PouchManager** -- proximity-based OverlapSphere scanner, Q/E cycles nearest/farthest pouchable Joey, no owned list
+- **JoeyLauncher** -- hold-to-aim (slow-mo), release-to-fire mortar arc along Z, auto-recall after 3s
+- **Input actions added:** CycleJoeyNext (E/RB), CycleJoeyPrev (Q/LB)
+- **SO assets created:** Joey_Normal, Joey_Lead, Ability_BowlingBall, 6 GameEvent SOs
+- **Scene wired:** Two Raccoon Cub PA prefabs (scaled 0.4) placed behind Mom, Animators disabled, all components wired
+- Playtested: Joeys following Mom confirmed working, follow distance needs tuning
 
-**Next (Sprint 2 -- Joey Launch MVP):**
-- Raccoon cub prefab as Joey prototype -- follow mom like lemmings
-- Replace bolt projectile with cub launch mechanic
-- Mortar arc tuning (deferred from Sprint 1 -- tune after bolt replaced with cub)
-- JoeyDefinition/AbilityDefinition ScriptableObjects
+**Major design decisions this session:**
+- Joeys are **autonomous companion AI**, not inventory items (Pikmin-like)
+- Follow line is **emergent** based on proximity -- no managed list
+- Pouching requires **physical proximity** to Mom
+- Joeys **stop at ledges** they can't cross alone (future: 3+ Joeys form ladder)
+- Joeys **collide with Mom and each other** -- pile-ups are intentional humor
+- Joeys are **indestructible** (except Normal Joey) but can be **kidnapped by predators**
+- Mom-dodge direction is **+X (toward camera)** -- deferred to polish pass
+- 2.5D axes: **Z = lateral movement, X = depth (locked), Y = up**
+
+**Next (Sprint 2 continued):**
+- Tune follow distance trigger (too far currently)
+- Test pouch/unpouch cycling (Q/E)
+- Test launch + auto-recall
+- Edge detection testing (ledges, gaps)
 - Toolkit for Ballistics trajectory visualization for launch arc
-
-**Sprint 2 prep (after Sprint 1 wrap-up):**
-- Raccoon cub prefab as Joey prototype -- follow mom like lemmings
-- Replace bolt projectile with cub launch mechanic
-- JoeyDefinition/AbilityDefinition ScriptableObjects
-- Toolkit for Ballistics trajectory visualization for launch arc
+- Mortar arc tuning
+- RayFire for breakable barriers (Lead Joey smashes through)
 
 **What survived the crash:**
 - Full GDD (multiple versions, latest Dec 2025)
@@ -70,9 +79,9 @@ These items were completed before the crash and need to be rebuilt:
 | Climbing system with stamina | Was DONE | DONE -- ClimbStamina component drains Stamina stat, falls when empty |
 | Input System integration | Was DONE | DONE -- AQS_InputActions asset + QuokkaInputHandler |
 | Ground detection (collision-based) | Was DONE | DONE -- collision enter/stay/exit with normal check |
-| Joey prefab (base visuals) | Was DONE | TODO |
-| JoeyDefinition/AbilityDefinition SOs | Was IN PROGRESS | TODO |
-| MVP launch mechanic | Was TODO | TODO |
+| Joey prefab (base visuals) | Was DONE | DONE -- Raccoon Cub PA scaled 0.4, Animators disabled, scene-placed |
+| JoeyDefinition/AbilityDefinition SOs | Was IN PROGRESS | DONE -- Joey_Normal, Joey_Lead, Ability_BowlingBall |
+| MVP launch mechanic | Was TODO | IN PROGRESS -- aim/fire/auto-recall coded, needs tuning + testing |
 | Package installation + configuration | Was DONE | DONE -- Sprint 1 packages installed |
 | Asset eval for new candidates | N/A | DONE -- 30 relevant assets identified |
 | GameEvent/GameEventListener system | Was DONE | DONE -- AQS.Core namespace |
@@ -107,6 +116,7 @@ Searched all evaluated assets for AQS relevance. Results by gameplay need:
 
 | Entry | Asset | Purpose | Sprint |
 |-------|-------|---------|--------|
+| 029 | Ultimate Selector 3.4.8 (Malbers) | Joey radial selection wheel (replaces blind Q/E cycling) | 3 |
 | 136 | MegaFiers 2 (Chris West) | Helium Joey inflate (FFD, morph targets) | 3 |
 | 153 | Deform (Beans) | Squash/stretch for platforming feel | 3 |
 | 231 | SensorToolkit2 (Micosmo) | Enemy vision cones, range detection, LOS (has 2D variants) | 4 |
@@ -124,6 +134,7 @@ Searched all evaluated assets for AQS relevance. Results by gameplay need:
 | 202 | VFX Library (OccaSoftware) | Fireflies, wisps, swamp bubbles | 5 |
 | 156 | Advanced Dissolve (Amazing Assets) | Enemy death dissolves, biome transitions | 5 |
 | 170 | Ghost Effect Shader (OccaSoftware) | Ghost/spirit visual effects | 5 |
+| 297 | Malbers Quest Forge 1.0 | Quest tracking, minimap/world map, dialogue, compass, save/load (AC-native) | 5 |
 | 265 | Weather Maker (Digital Ruby) | Rain, fog, lightning for swamp mood | 5+ |
 | 245 | FS Grappling Hook (Fantacode) | Metroidvania grapple traversal | 5+ |
 | 169 | Inventory Framework 2 | UI Toolkit inventory for Joey/collectible management | 5+ |
@@ -158,6 +169,7 @@ Searched all evaluated assets for AQS relevance. Results by gameplay need:
 - Add 2-3 more Joeys (Ballet freeze, Helium inflate, Ninja shuriken)
 - Inflate mechanic prototype (start with DOTween scale tween, eval MegaFiers 2 ENTRY-136 or Deform ENTRY-153 if needed)
 - Pouch management (swap active Joey, equipped Joey modifies Mom stats)
+- Ultimate Selector (ENTRY-029) for radial Joey selection wheel (replaces blind Q/E when 3+ Joeys)
 - Rope Toolkit (ENTRY-271) for vine swinging traversal
 
 ### Sprint 4: Enemies
@@ -170,6 +182,8 @@ Searched all evaluated assets for AQS relevance. Results by gameplay need:
 ### Sprint 5: Vertical Slice
 - One playable level (Tutorial or Swamp)
 - All core systems integrated
+- Malbers Quest Forge (ENTRY-297) for quest tracking, minimap/world map reveal, dialogue, compass
+- AA Map and Minimap evaluation (may be superseded by Quest Forge's built-in minimap)
 
 ---
 
@@ -184,6 +198,9 @@ Searched all evaluated assets for AQS relevance. Results by gameplay need:
 | Malbers ammo IntVars reset on reinstall | Medium | KNOWN | Ammo Pistol + Ammo Pistol in Chamber must be -1. Fresh Malbers install resets to 0/32. |
 | GDD may need design updates | Medium | TODO | User to review after format cleanup |
 | Stamina UI needed | Low | TODO | Malbers has prefabs (Slider Stamina UI, Stamina Bar). Wire up in future UI pass. |
+| Joey follow distance too far | Medium | TUNING | followStartDistance=2.5 is too large. Cubs don't start following until Mom is far away. Reduce to ~1.5-1.8. |
+| Joey Mom-dodge uses wrong axis | Low | DEFERRED | Placeholder dodge hops along Z (backward). Should hop +X (toward camera). Needs temp X unlock. |
+| Joey pouching/launch untested | Medium | TODO | Q/E cycle and LMB launch coded but not yet playtested. |
 
 ---
 

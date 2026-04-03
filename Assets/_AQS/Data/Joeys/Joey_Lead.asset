@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df09603ae2753af4f874ee532f431f77, type: 3}
+  m_Name: Joey_Lead
+  m_EditorClassIdentifier: Assembly-CSharp::AQS.Joey.JoeyDefinition
+  joeyName: Lead
+  role: 1
+  description: Tank. Heavy hitter. Crashes through enemies and obstacles.
+  portrait: {fileID: 0}
+  ability: {fileID: 11400000, guid: a8667c3ad11d48c43b40884adb337948, type: 2}
+  maxEnergy: 100
+  inPouchRegenRate: 30
+  outOfPouchRegenRate: 10
+  moveSpeedMultiplier: 0.75
+  jumpHeightMultiplier: 1
+  defenseMultiplier: 1.3
+  fallSpeedMultiplier: 1
+  drawbackDescription: Slows Mom's movement by 25%
+  damageTakenMultiplier: 1
+  otherJoeyRegenMultiplier: 1
+  instrumentGroupName: Didgeridoo
+  joeyPrefab: {fileID: 1103648266164438, guid: e5faf391eb45f6047925e63a0109faa4, type: 3}
