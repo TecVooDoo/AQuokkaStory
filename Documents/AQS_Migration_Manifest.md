@@ -157,7 +157,9 @@ Install from Asset Store cache (no export needed):
 |------|--------|-------|
 | Horse Animset Pro 4.5.1 (Malbers) | Done | Includes Animal Controller. Primary movement system. |
 | Poly Art: Raccoon 4.0 (Malbers) | Done | Raccoon + Raccoon Cub prefabs. |
-| Low Poly Animated Animals 4.1.1 (Polyperfect) | Done | 162 prefabs, 68 species. Enemy/test placeholders. |
+| Low Poly Animated Animals 4.1.1 (Polyperfect) | Done | 162 prefabs, 68 species. Enemy/test placeholders. Demoted to fallback in Sprint 4 (see Forest Set). |
+| Poly Art: Animal Forest Set (Malbers) | Done (Apr 21) | 10 AC-native forest animals. Installed at `Assets/Malbers Animations/Animals Packs/01 Forest Pack/`. Sandbox eval: ENTRY-336. |
+| Technie Collider Creator 2 (Triangular Pixels) | Done (Apr 21) | Paint-based collider authoring + VHACD. Installed at `Assets/Technie/PhysicsCreator/`. MCP tools at `com.tecvoodoo.mcp-tools/TCC/Editor/`. Sandbox eval: ENTRY-330. |
 
 ### CustomPatch Files
 
@@ -231,6 +233,10 @@ These Malbers source files have custom patches that need to be re-applied after 
 | Apr 1, 2026 | Phase 4 | BlankTest scene verified -- weapon, swim, climb all working | Done |
 | Apr 1, 2026 | Phase 4 | CM_2_5D_Follow re-wired to CM Main Target | Done |
 | Apr 1, 2026 | Phase 3 | CustomPatches verified intact, temp debug logs removed (15 lines) | Done |
+| Apr 21, 2026 | Phase 3 | Poly Art Animal Forest Set (Malbers) installed -- 10 AC-native animals added for Sprint 4 enemy work | Done |
+| Apr 21, 2026 | Phase 3 | Technie Collider Creator 2 installed -- paint-based collider authoring for Mom/Joey hull fits | Done |
+| Apr 26, 2026 | Phase 3 | Unity MCP plugin upgraded 0.63.3 -> 0.66.0 (+ HAP plugins to matching versions) | Done |
+| Apr 26, 2026 | Phase 3 | MCP transport migrated stdio -> streamableHttp on port 25675; verification all green | Done |
 
 ---
 
