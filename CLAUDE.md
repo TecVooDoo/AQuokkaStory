@@ -45,6 +45,19 @@
 - **Asset evals live in Sandbox** -- don't create eval docs here
 - **NEVER assume APIs** -- read actual source before writing code. Verify every method/property name.
 
+## Doc updates and git workflow
+
+**Triggers:** "update docs as necessary", "update docs", "wrap it up", "we're done", "log off", or any explicit end-of-session signal.
+
+**On trigger, before ending the response:**
+
+1. Update project docs to reflect what changed (bump `Last Updated`, add session entries to `AQS_Status.md` and `AQS_Migration_Manifest.md` if relevant).
+2. Stage and commit -- meaningful files only, no `git add -A` blasts. Respect `.gitignore` (`.claude/` stays ignored, no `-f`).
+3. Push to the branch in use. No force-push, no `--no-verify`, no committing secrets.
+4. Co-author trailer: `Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>` (or whatever model is active).
+
+**Scope: this repo only.** If you edited docs in another repo (e.g. `E:/Unity/Sandbox/Documents/MCP_ConnectionBrief.md`), leave them as working tree -- that project's Claude commits them.
+
 ## MCP
 
 - Unity MCP via `com.ivanmurzak.unity.mcp` (OpenUPM). Port in `.claude/mcp.json` -- update after MCP install.
