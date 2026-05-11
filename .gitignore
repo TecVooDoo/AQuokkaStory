@@ -94,3 +94,10 @@ crashlytics-build.properties
 /Packages/com.febucci.text-animator-unity/
 /Packages/com.kybernetik.animancer/
 # Keep manifest.json and packages-lock.json
+
+# Claude Code: settings.json holds project-shared permissions and should be in repo.
+# Local overrides (per-machine) live in settings.local.json (kept ignored below).
+!.claude/
+.claude/*
+!.claude/settings.json
+.claude/settings.local.json
