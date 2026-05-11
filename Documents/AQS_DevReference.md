@@ -1,7 +1,15 @@
 # A Quokka Story -- Dev Reference
 
-**Purpose:** Architecture, coding standards, and AI rules for A Quokka Story. Read on demand -- primary doc is `AQS_Status.md`.
-**Last Updated:** April 1, 2026 (Session 15 -- Migration to standalone)
+**Purpose:** AQS-specific architecture, namespaces, dependencies, and project deltas. Universal coding + workflow rules live in `E:\Unity\Sandbox\Documents\Canonical\`. Read on demand -- primary doc is `AQS_Status.md`.
+**Last Updated:** 2026-05-11
+**Version:** 2.0
+
+## Revision History
+
+| Date | Version | Change |
+|------|---------|--------|
+| 2026-04-01 | 1.0 | Initial dev reference at Session 15 (migration to standalone). |
+| 2026-05-11 | 2.0 | iter-3.5 canonical adoption pass. Replaced inline Coding Standards / Refactor Guidelines / Session Workflow with pointers to `Canonical/TecVooDoo_CodingStandards.md` + `Canonical/UniversalWorkflow.md`. Project-specific deltas retained. |
 
 ---
 
@@ -207,20 +215,17 @@ GameManager
 
 ## Coding Standards
 
-Same as all TecVooDoo projects:
+**Universal TecVooDoo coding standards: see `E:\Unity\Sandbox\Documents\Canonical\TecVooDoo_CodingStandards.md` (canonical).** That file is the single source of truth across all TecVooDoo Unity projects. When it changes, the change shows in its Revision History header.
 
-- **No `var`** -- explicit types always
-- **No per-frame allocations/LINQ** -- cache, pool, reuse
-- **ASCII only** in docs and identifiers
-- **Vanilla SO architecture** -- GameEvent/GameEventListener for events (NOT SOAP)
-- **Malbers Animal Controller** for player movement (MAnimal + LockAxis for 2.5D). Animancer Pro may still be used for non-AC characters/VFX.
-- **Keep scripts focused** -- extract when a class has more than one clear responsibility. No hard line limit. A 3000-line class that does one thing well is fine.
-- **Prefer interfaces and generics** -- decouple systems, reduce duplication
-- **Collision-based ground detection** -- NOT raycasts (design decision from original project, works better with 2.5D slopes and moving platforms)
-- **3D physics for 2.5D** -- use `Rigidbody` + `CapsuleCollider` + `Collision` (3D types), NOT `Rigidbody2D`. **Z is lateral movement, X is depth (locked), Y is up.** Camera looks down -X. Freeze X position + rotation on Joeys. Mom uses LockAxis.
+**Refactor philosophy + session workflow (bookends, commit ownership): see `E:\Unity\Sandbox\Documents\Canonical\UniversalWorkflow.md` (canonical).**
+
+### AQS-Specific Additions
+
+- **3D physics for 2.5D** -- use `Rigidbody` + `CapsuleCollider` + `Collision` (3D types), **NOT** `Rigidbody2D`. **Z is lateral movement, X is depth (locked), Y is up.** Camera looks down -X. Freeze X position + rotation on Joeys. Mom uses Malbers `LockAxis` component.
 - **Unity 6 Rigidbody API** -- use `rb.linearVelocity` (not `velocity`). No `gravityScale` on 3D Rigidbody -- use `AddForce` with `Physics.gravity` multiplier for fall acceleration.
-- **sealed on MonoBehaviours** -- unless inheritance is specifically intended
-- **Prefer async/await (UniTask)** -- over coroutines
+- **Collision-based ground detection** -- NOT raycasts. Design decision from the original (pre-crash) project; works better with 2.5D slopes and moving platforms. Override the canonical default if it ever conflicts.
+- **Malbers Animal Controller** is the primary movement system. MAnimal + LockAxis for 2.5D constraint. Animancer Pro may still be used for non-AC characters / VFX. Build from a working Malbers demo prefab -- never build MAnimal from scratch on a blank GameObject (see `AQS_MalbersRecipe.md`).
+- **Vanilla SO + GameEvent** is the cross-system event channel. No SOAP (confirmed in canonical).
 
 ---
 
@@ -264,18 +269,19 @@ Full step-by-step recipe in `AQS_MalbersRecipe.md`. Key rules summarized here:
 
 ---
 
-## AI Rules
+## AI Rules (AQS-specific)
+
+Universal session workflow (bookends, commit ownership, refactor philosophy) lives in `Canonical/UniversalWorkflow.md`. The deltas that apply only to AQS:
 
 1. **Primary doc:** `AQS_Status.md` -- read first, always.
-2. **Working directory:** `E:\Unity\AQuokkaStory`
-3. **AQS root:** `Assets/_AQS/`
+2. **Working directory:** `E:\Unity\AQuokkaStory`. **Branch is `master`**, not `main`. Remote is `https://github.com/TecVooDoo/AQuokkaStory`.
+3. **AQS root:** `Assets/_AQS/`.
 4. **GDD is user's doc** -- update only when asked.
 5. **Collision-based ground detection** -- never suggest raycasts for ground checks.
 6. **Stem music is core identity** -- every character/enemy must have an instrument assignment.
 7. **Joey abilities always have drawbacks** -- no dominant strategies.
-8. **All TecVooDoo coding standards apply** -- see Coding Standards section above.
+8. **Asset evaluations live in Sandbox** -- reference `E:\Unity\Sandbox\Documents\Sandbox_AssetLog.md`. Do not create eval docs here.
 9. **MCP tools available** -- use for scene setup, component configuration, testing.
-10. **Asset evaluations live in Sandbox** -- reference `E:\Unity\Sandbox\Documents\Sandbox_AssetLog.md` for eval decisions.
 
 ---
 

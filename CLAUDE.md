@@ -3,74 +3,58 @@
 ## Project
 
 - **Game:** A Quokka Story -- 2.5D Metroidvania Platformer
-- **Engine:** Unity 6 (6000.3.11f1), URP
+- **Engine:** Unity 6 (6000.3.15f1 on this recovery pass), URP
 - **Path:** `E:\Unity\AQuokkaStory`
-- **Root:** `Assets/_AQS/`
+- **AQS root:** `Assets/_AQS/`
+- **Branch:** `master` (not `main`). Remote: `https://github.com/TecVooDoo/AQuokkaStory`
 - **Developer:** TecVooDoo LLC / Rune (Stephen Brandon)
 
-## Docs -- Read These First
+## Docs -- Read in This Order
 
 | Question | Read This |
 |----------|-----------|
-| Where are we at? | `Documents/AQS_Status.md` |
-| Architecture, standards? | `Documents/AQS_DevReference.md` |
+| Where are we at? Session bookends? | `Documents/AQS_Status.md` (primary) + `Canonical/UniversalWorkflow.md` |
+| AQS-specific architecture + deltas? | `Documents/AQS_DevReference.md` |
 | Script API? | `Documents/AQS_CodeReference.md` |
 | Malbers AC recipe? | `Documents/AQS_MalbersRecipe.md` |
 | Game design? | `Documents/GDD/AQS_GDD.md` (user's doc -- update only when asked) |
-| Migration plan? | `Documents/AQS_Migration_Manifest.md` |
-| Asset evals? | `E:\Unity\Sandbox\Documents\Sandbox_AssetLog.md` (Sandbox is single source) |
+| Asset evals? | `E:\Unity\Sandbox\Documents\Sandbox_AssetLog.md` (Sandbox is the only source) |
 
-## Coding Standards
+## Canonical Layer (single source of truth, read on demand)
 
-- **No `var`** -- explicit types always
-- **No per-frame allocations/LINQ** -- cache, pool, reuse
-- **ASCII only** in docs and identifiers
-- **sealed** on MonoBehaviours unless inheritance intended
-- **Prefer async/await (UniTask)** over coroutines
-- **Prefer interfaces and generics** -- decouple systems, reduce duplication
-- **Vanilla SO architecture** -- GameEvent/GameEventListener for events (NOT SOAP)
-- **Malbers Animal Controller** for player movement (MAnimal + LockAxis for 2.5D)
-- **3D physics for 2.5D** -- Rigidbody + CapsuleCollider. **Z = lateral movement, X = depth (locked), Y = up.** Camera looks down -X. Freeze X position on Joeys, Mom uses LockAxis.
-- **Collision-based ground detection** -- NOT raycasts
-- **Unity 6 API** -- `rb.linearVelocity` not `velocity`
-- **Extract by responsibility** not line count
-- **Production-quality test code** even during prototyping
+- **Coding standards:** `E:\Unity\Sandbox\Documents\Canonical\TecVooDoo_CodingStandards.md`
+- **Workflow (bookends, commit ownership, refactor philosophy, gotchas, user preferences):** `E:\Unity\Sandbox\Documents\Canonical\UniversalWorkflow.md`
+- **MCP install + upgrade recipes:** `E:\Unity\Sandbox\Documents\Canonical\MCP_ConnectionBrief.md`
 
-## Key Rules
+Per the canonical commit-ownership rule, this AQS session may **edit** any file but only **commits + pushes** from `E:\Unity\AQuokkaStory`. Canonical edits stay in the Sandbox working tree for a Sandbox session to push.
 
-- **GDD is user's doc** -- update only when asked
-- **Stem music is core identity** -- every character/enemy needs an instrument assignment
-- **Joey abilities always have drawbacks** -- no dominant strategies
-- **Build Malbers AC from prefab** -- never build MAnimal from scratch on blank GameObjects
-- **Asset evals live in Sandbox** -- don't create eval docs here
-- **NEVER assume APIs** -- read actual source before writing code. Verify every method/property name.
+## AQS-Specific Rules (everything else is in the canonicals)
 
-## Doc updates and git workflow
-
-**Triggers:** "update docs as necessary", "update docs", "wrap it up", "we're done", "log off", or any explicit end-of-session signal.
-
-**On trigger, before ending the response:**
-
-1. Update project docs to reflect what changed (bump `Last Updated`, add session entries to `AQS_Status.md` and `AQS_Migration_Manifest.md` if relevant).
-2. Stage and commit -- meaningful files only, no `git add -A` blasts. Respect `.gitignore` (`.claude/` stays ignored, no `-f`).
-3. Push to the branch in use. No force-push, no `--no-verify`, no committing secrets.
-4. Co-author trailer: `Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>` (or whatever model is active).
-
-**Scope: this repo only.** If you edited docs in another repo (e.g. `E:/Unity/Sandbox/Documents/MCP_ConnectionBrief.md`), leave them as working tree -- that project's Claude commits them.
+- **2.5D axis convention:** Z = lateral movement, X = depth (locked), Y = up. Camera looks down -X. Freeze X on Joeys, Mom uses Malbers `LockAxis`.
+- **3D physics for 2.5D**, never `Rigidbody2D`. Unity 6 API -- `rb.linearVelocity` not `velocity`.
+- **Collision-based ground detection** -- never raycast.
+- **GDD is user-owned** -- update only when asked.
+- **Stem music is core identity** -- every character/enemy needs an instrument assignment.
+- **Joey abilities always have drawbacks** -- no dominant strategies.
+- **Build Malbers AC from a working prefab** -- never from a blank GameObject.
+- **Asset evals live in Sandbox** -- don't create eval docs here.
+- **Never assume APIs** -- read source before writing code. Verify every method/property name.
 
 ## MCP
 
-- Unity MCP via `com.ivanmurzak.unity.mcp` (OpenUPM). Port in `.claude/mcp.json` -- update after MCP install.
-- Custom tools via `com.tecvoodoo.mcp-tools` (local UPM package)
-- `script-execute` is the power tool (Roslyn). C# `<>` gets HTML-encoded -- use `typeof()` casts.
+- Unity MCP via `com.ivanmurzak.unity.mcp` (OpenUPM). AQS HTTP port: **25675**. Transport: `streamableHttp`.
+- Custom tools via `com.tecvoodoo.mcp-tools` (local UPM at `E:/Unity/DefaultUnityPackages/com.tecvoodoo.mcp-tools`).
+- `.claude/mcp.json` may go stale after Reconfigure -- hand-edit to match `.mcp.json` if needed.
+- `script-execute` is the Roslyn power tool. C# `<>` gets HTML-encoded -- use `typeof()` casts.
 - MCP disconnects during domain reload -- wait for auto-reconnect.
+- Recovery upgrade target on this pass: MCP 0.66.1 -> 0.72.0. Follow the recipe in `Canonical/MCP_ConnectionBrief.md`.
 
-## Critical Gotchas
+## Critical Gotchas (project-specific)
 
-- **Animancer Pro** -- install BEFORE 3D art assets (FBX catalog scan)
-- **Master Audio 2024** -- install Addressables FIRST
-- **DOTween Pro** -- install TextMesh Pro FIRST
-- **Odin Inspector** -- never remove from installed project
-- **UPM Git URLs don't work** on this machine -- clone repo, use `file:` reference
-- **Malbers MShootable.cs** has 3 custom patches (operator precedence, zero-delay, CG hierarchy). Re-apply after Malbers updates. Markers: `//CustomPatch:`
-- **Random ambiguity** -- `using Unity.Mathematics;` + `using UnityEngine;` = CS0104. Fix: `using Random = UnityEngine.Random;`
+- **Animancer Pro** -- install BEFORE 3D art assets (FBX catalog scan).
+- **Master Audio 2024** -- install Addressables FIRST.
+- **DOTween Pro** -- install TextMesh Pro FIRST.
+- **Odin Inspector** -- never remove once installed.
+- **UPM Git URLs don't work** on this machine -- clone repo, use `file:` reference.
+- **Malbers MShootable.cs** has 3 custom patches (operator precedence, zero-delay, CG hierarchy). Re-apply after Malbers updates. Markers: `//CustomPatch:`.
+- **Random ambiguity** -- `using Unity.Mathematics;` + `using UnityEngine;` => CS0104. Fix: `using Random = UnityEngine.Random;`.

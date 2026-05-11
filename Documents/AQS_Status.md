@@ -2,10 +2,10 @@
 
 **Project:** A Quokka Story (2.5D Metroidvania Platformer)
 **Developer:** TecVooDoo LLC / Rune (Stephen Brandon)
-**Unity Version:** 6000.3.11f1 (Unity 6, URP)
+**Unity Version:** 6000.3.15f1 (Unity 6, URP) -- upgraded from 6000.3.11f1 on the 2026-05-11 recovery pass
 **Project Path:** `E:\Unity\AQuokkaStory`
 **AQS Root:** `Assets/_AQS/`
-**Last Updated:** April 26, 2026 (MCP streamableHttp migration)
+**Last Updated:** 2026-05-11 (iter-3.5 canonical adoption + recovery audit)
 
 > **NOTE:** Original project lost to crash (pre-GitHub backup era). Resurrected from archived docs. Code rebuilt from scratch in Sandbox incubator (Sessions 0-14). Migrated to standalone project Session 15.
 
@@ -17,7 +17,19 @@
 
 ## Current State
 
-**Phase:** Sprint 2 IN PROGRESS. Joey system foundation built. Two Raccoon Cub Joeys (Normal + Lead) placed in scene, following Mom via chain-follow with physics-based hop movement. Proximity-based pouching, mortar-arc launch, auto-recall, energy system all coded. Joeys are autonomous companion AI -- they stop at ledges they can't cross, stay behind when Mom is out of range, and form an emergent follow line.
+**Phase:** Sprint 2 IN PROGRESS, paused mid-flight for the May 2026 recovery pass (computer crash on 2026-05-09 -- AQS filesystem on E: survived, but VSCode/Claude memory and Unity/MCP package state are being brought back online). Joey system foundation built.
+
+**Session 17 (2026-05-11) -- Recovery audit + iter-3.5 canonical adoption:**
+- Rebuilt Claude memory at `C:\Users\steph\.claude\projects\e--Unity-AQuokkaStory\memory\` (6 seeds: user profile, project overview, MCP/Unity upgrade in-flight, doc map, canonical pointers, push permission).
+- Unity version bumped 6000.3.11f1 -> 6000.3.15f1; first reopen in progress while doc audit runs.
+- MCP plugin upgrade path 0.66.1 -> 0.72.0 queued (per the recovery-pass plan). Recipe lives in `Canonical/MCP_ConnectionBrief.md`. Port 25675, streamableHttp -- unchanged.
+- **iter-3.5 canonical adoption applied:**
+  - `AQS_DevReference.md` v2.0: replaced inline Coding Standards / Refactor Guidelines / Session Workflow blocks with pointers to `Canonical/TecVooDoo_CodingStandards.md` + `Canonical/UniversalWorkflow.md`. Project-specific deltas (2.5D physics, collision-based ground, Malbers AC, stem music, GameEvent SOs) retained. Revision History header added.
+  - `CLAUDE.md` slimmed to iter-3.5 pointer-index shape. Branch (`master`) and MCP port (25675) made explicit.
+  - `AQS_CodeReference.md` v2.0: refreshed against current scripts on disk. Adds full `AQS.Joey` namespace (9 scripts) and `ClimbStamina`. Old version was pre-migration stub.
+  - `AQS_Migration_Manifest.md` moved to `Documents/Archives/` (migration is complete; manifest is dead weight per iter-3.5).
+- Committed previously uncommitted DevRef edits + manifest pin to MCP 0.66.1 (sub-packages stripped per the Apr 29 fleet-pin decision) as part of this audit pass.
+- Push permission granted standing (no per-push confirmation needed) -- saved as `feedback_push_permission.md` in memory. Two Raccoon Cub Joeys (Normal + Lead) placed in scene, following Mom via chain-follow with physics-based hop movement. Proximity-based pouching, mortar-arc launch, auto-recall, energy system all coded. Joeys are autonomous companion AI -- they stop at ledges they can't cross, stay behind when Mom is out of range, and form an emergent follow line.
 
 **MCP transport migration (Apr 26, 2026):**
 - Unity MCP plugin upgraded 0.63.3 -> 0.66.0 (HAP plugin family bumped in lockstep).
@@ -231,12 +243,15 @@ Searched all evaluated assets for AQS relevance. Results by gameplay need:
 
 | Document | Path |
 |----------|------|
-| Dev Reference | `Documents\AQS_DevReference.md` |
+| Dev Reference (AQS deltas) | `Documents\AQS_DevReference.md` |
+| Code Reference (script inventory) | `Documents\AQS_CodeReference.md` |
 | Malbers Recipe | `Documents\AQS_MalbersRecipe.md` |
 | GDD | `Documents\GDD\AQS_GDD.md` |
 | Concept Art | `Documents\Archives\Quokka Mom and Joeys Concept Art\` |
-| Archived Docs (pre-crash) | `Documents\Archives\` |
-| Migration Manifest | `Documents\AQS_Migration_Manifest.md` |
+| Archived Docs (pre-crash + retired manifests) | `Documents\Archives\` |
+| Canonical Coding Standards | `E:\Unity\Sandbox\Documents\Canonical\TecVooDoo_CodingStandards.md` |
+| Canonical Universal Workflow | `E:\Unity\Sandbox\Documents\Canonical\UniversalWorkflow.md` |
+| MCP Connection Brief | `E:\Unity\Sandbox\Documents\Canonical\MCP_ConnectionBrief.md` |
 | Sandbox Asset Log | `E:\Unity\Sandbox\Documents\Sandbox_AssetLog.md` |
 
 ---
