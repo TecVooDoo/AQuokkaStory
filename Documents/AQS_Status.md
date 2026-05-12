@@ -19,7 +19,13 @@
 
 **Phase:** Sprint 2 IN PROGRESS, paused mid-flight for the May 2026 recovery pass (computer crash on 2026-05-09 -- AQS filesystem on E: survived, but VSCode/Claude memory and Unity/MCP package state are being brought back online). Joey system foundation built.
 
-**Session 17 (2026-05-11) -- Recovery audit + iter-3.5 canonical adoption:**
+**Session 17 (2026-05-11) -- Recovery upgrade + iter-3.5 canonical adoption:**
+
+- **Unity bumped 6000.3.11f1 -> 6000.3.15f1** and **MCP plugin bumped 0.66.1 -> 0.72.1 direct** (the Rune-altered direct-jump recipe; fifth project-level verification of that path). First reopen clean: 0 console errors, `scene-list-opened` returns valid scene, ~147 MCP tools registered.
+- Sub-packages re-added during the upgrade resolve: `animation 1.1.38` / `particlesystem 1.0.64` / `probuilder 1.0.76`. Several Unity packages also auto-bumped (Cinemachine 3.1.5->3.1.6, collab-proxy 2.11.4->2.12.4, collections 2.6.5->2.6.6, editorcoroutines 1.0.1->1.1.0, test-framework.performance 3.2.1->3.4.2).
+- Port Registry row in `Canonical/MCP_ConnectionBrief.md` updated to OK / 0.72.1 / 2026-05-11. (Edit lives in Sandbox working tree -- a Sandbox session pushes it.)
+- iter-3.5 canonical adoption pass (pre-upgrade audit):
+
 - Rebuilt Claude memory at `C:\Users\steph\.claude\projects\e--Unity-AQuokkaStory\memory\` (6 seeds: user profile, project overview, MCP/Unity upgrade in-flight, doc map, canonical pointers, push permission).
 - Unity version bumped 6000.3.11f1 -> 6000.3.15f1; first reopen in progress while doc audit runs.
 - MCP plugin upgrade path 0.66.1 -> 0.72.0 queued (per the recovery-pass plan). Recipe lives in `Canonical/MCP_ConnectionBrief.md`. Port 25675, streamableHttp -- unchanged.
